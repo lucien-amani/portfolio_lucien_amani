@@ -1,0 +1,24 @@
+{
+  "short_name": "Lucien A.",
+  "name": "Lucien Amani Bahogwerhe – Développeur Fullstack",
+  "description": "Portfolio professionnel de Lucien Amani Bahogwerhe, développeur web fullstack à Bukavu, RDC.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#09090b",
+  "theme_color": "#7c3aed",
+  "icons": [
+    {
+      "src": "/favicon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -8,11 +8,11 @@ const NAV = [
   { label: 'Contact', href: '#contact' },
 ]
 
-// const SOCIAL = [
-//   { id: 'footer-github', label: 'GitHub', href: 'https://github.com/lucien-amani', icon: Github },
-//   { id: 'footer-linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/lucius-amani-333540353/', icon: Linkedin },
-//   { id: 'footer-twitter', label: 'Twitter', href: 'https://x.com/LucienAman29545', icon: Twitter }
-// ]
+const SOCIAL = [
+  { id: 'footer-github', label: 'GitHub', href: 'https://github.com/lucien-amani', icon: Github },
+  { id: 'footer-linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/lucius-amani-333540353/', icon: Linkedin },
+  { id: 'footer-twitter', label: 'Twitter', href: 'https://x.com/LucienAman29545', icon: Twitter }
+]
 
 export default function Footer() {
   const year = new Date().getFullYear()

@@ -1,16 +1,11 @@
 import { useState } from 'react'
 import { ArrowDown, Github, Linkedin, MapPin, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useLang } from '../contexts/LanguageContext'
+import { openWhatsApp } from '../utils/social'
 import profilImg from '../assets/Profil_img.jpg'
 import lucienAmani from '../assets/lucien_amani.jpg'
 import lucienUob from '../assets/lucien-uob.jpg'
 import lucienLabo from '../assets/lucien_au_labo.jpg'
-
-const IMAGES = [
-  { src: profilImg, alt: 'Lucien Amani - Image principale', caption: 'Lucien Amani Bahogwerhe' },
-  { src: lucienUob, alt: 'Lucien Amani à l UOB', caption: 'Université Officielle de Bukavu' },
-  { src: lucienLabo, alt: 'Lucien au Laboratoire', caption: 'Travail au laboratoire informatique' },
-  { src: lucienAmani, alt: 'Lucien Amani - Portrait', caption: 'Développeur Fullstack' },
-]
 
 const GoIcon = () => (
   <svg viewBox="0 0 40 16" width="36" height="14" aria-label="Go">
@@ -43,7 +38,6 @@ const PhpIcon = () => (
   </svg>
 )
 
-
 const STACK = [
   { name: 'GoLang', Icon: GoIcon, bg: 'bg-sky-50 dark:bg-sky-950/30', border: 'border-sky-200 dark:border-sky-800' },
   { name: 'Python', Icon: PythonIcon, bg: 'bg-blue-50 dark:bg-blue-950/30', border: 'border-blue-200 dark:border-blue-800' },
@@ -53,51 +47,49 @@ const STACK = [
 ]
 
 export default function Hero() {
+  const { t, lang } = useLang()
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const handleNext = () => {
-    setActiveIndex(prev => (prev + 1) % IMAGES.length)
-  }
+  const IMAGES = [
+    { src: profilImg,   alt: t('hero_img1_alt'), caption: t('hero_img1_caption') },
+    { src: lucienUob,   alt: t('hero_img2_alt'), caption: t('hero_img2_caption') },
+    { src: lucienLabo,  alt: t('hero_img3_alt'), caption: t('hero_img3_caption') },
+    { src: lucienAmani, alt: t('hero_img4_alt'), caption: t('hero_img4_caption') },
+  ]
 
-  const handlePrev = () => {
-    setActiveIndex(prev => (prev - 1 + IMAGES.length) % IMAGES.length)
-  }
+  const handleNext = () => setActiveIndex(prev => (prev + 1) % IMAGES.length)
+  const handlePrev = () => setActiveIndex(prev => (prev - 1 + IMAGES.length) % IMAGES.length)
 
   return (
     <section id="accueil" className="min-h-screen flex flex-col justify-center pt-16 px-6">
       <div className="max-w-6xl mx-auto w-full grid lg:grid-cols-12 gap-12 items-center py-20">
 
-        {/* ── Left content: Info (Grid spans 7 cols) ── */}
+        {/* ── Left content ── */}
         <div className="lg:col-span-7 space-y-7">
           <div className="animate-fade-up inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-50 dark:bg-violet-950/40 border border-violet-200 dark:border-violet-800 text-violet-700 dark:text-violet-300 text-xs font-medium">
             <MapPin size={12} />
-            Bukavu, République Démocratique du Congo
+            {t('hero_location')}
           </div>
 
           <div className="animate-fade-up delay-100 space-y-3">
             <p className="text-sm font-semibold uppercase tracking-widest text-violet-600 dark:text-violet-400">
-              Développeur Fullstack
+              {t('hero_role')}
             </p>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-zinc-900 dark:text-white text-balance">
-              Je ne livre pas du code.
+              {t('hero_tagline')}
               <br />
-              <span className="text-violet-600 dark:text-violet-400">Je livre des solutions.</span>
+              <span className="text-violet-600 dark:text-violet-400">{t('hero_tagline2')}</span>
             </h1>
           </div>
 
           <p className="animate-fade-up delay-200 text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-lg text-balance">
-            Né à Bukavu, formé à l&apos;Université Officielle de Bukavu, je construis des logiciels qui résolvent
-            de vrais problèmes pour les organisations, écoles, PMEs, coopératives agricoles et les personnes privées
-            qui méritent mieux que des outils génériques.
+            {t('hero_desc')}
           </p>
 
-          {/* Language tech stack badges */}
+          {/* Stack badges */}
           <div className="animate-fade-up delay-300 flex flex-wrap gap-2">
             {STACK.map(({ name, Icon, bg, border }) => (
-              <div
-                key={name}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${bg} border ${border} shadow-sm`}
-              >
+              <div key={name} className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${bg} border ${border} shadow-sm`}>
                 <Icon />
                 <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-200">{name}</span>
               </div>
@@ -106,50 +98,42 @@ export default function Hero() {
 
           {/* CTAs */}
           <div className="animate-fade-up delay-400 flex flex-wrap gap-4">
-            <a
-              href="#projets"
-              id="cta-projets"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition-colors"
-            >
-              Voir mes projets
+            <a href="#projets" id="cta-projets"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition-colors">
+              {t('hero_cta_projects')}
               <ArrowDown size={16} />
             </a>
-            <a
-              href="#contact"
-              id="cta-contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-zinc-300 dark:border-zinc-700 hover:border-violet-400 dark:hover:border-violet-600 text-zinc-700 dark:text-zinc-300 font-medium transition-colors"
-            >
-              Me contacter
+            <a href="#contact" id="cta-contact"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-zinc-300 dark:border-zinc-700 hover:border-violet-400 dark:hover:border-violet-600 text-zinc-700 dark:text-zinc-300 font-medium transition-colors">
+              {t('hero_cta_contact')}
             </a>
           </div>
 
           {/* Social */}
           <div className="animate-fade-up delay-500 flex items-center gap-3">
-            <a href="https://github.com/lucien-amani" target="_blank" rel="noopener noreferrer" id="link-github"
-              aria-label="GitHub"
+            <a href="https://github.com/lucien-amani" target="_blank" rel="noopener noreferrer"
+              id="link-github" aria-label="GitHub"
               className="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
               <Github size={20} />
             </a>
-            <a href="https://www.linkedin.com/in/lucius-amani-333540353/" target="_blank" rel="noopener noreferrer" id="link-linkedin"
-              aria-label="LinkedIn"
+            <a href="https://www.linkedin.com/in/lucius-amani-333540353/" target="_blank" rel="noopener noreferrer"
+              id="link-linkedin" aria-label="LinkedIn"
               className="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
               <Linkedin size={20} />
             </a>
             <span className="text-zinc-300 dark:text-zinc-700">|</span>
-            <span className="text-sm text-zinc-500 dark:text-zinc-500">CDI · CDD · Freelance</span>
+            <span className="text-sm text-zinc-500 dark:text-zinc-500">{t('hero_availability')}</span>
           </div>
         </div>
 
-        {/* ── Right content: Premium Interactive Photo Explorer (Grid spans 5 cols) ── */}
+        {/* ── Right content: Photo carousel ── */}
         <div className="lg:col-span-5 w-full flex flex-col items-center">
-          {/* Main active image container */}
           <div className="relative w-full max-w-[340px] aspect-[4/5] rounded-3xl overflow-hidden border-2 border-violet-200 dark:border-violet-800 shadow-2xl bg-zinc-100 dark:bg-zinc-900 group">
             <img
               src={IMAGES[activeIndex].src}
               alt={IMAGES[activeIndex].alt}
               className="w-full h-full object-cover object-top transition-all duration-500 ease-in-out scale-100 group-hover:scale-105"
             />
-            {/* Dark gradient overlay for caption */}
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 pt-12 flex flex-col justify-end">
               <p className="text-xs uppercase tracking-widest text-violet-400 font-semibold mb-1">
                 {IMAGES[activeIndex].caption}
@@ -159,50 +143,44 @@ export default function Hero() {
               </p>
             </div>
 
-            {/* Slide Navigation controls */}
+            {/* Navigation */}
             <div className="absolute top-1/2 -translate-y-1/2 inset-x-3 flex justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <button
-                onClick={handlePrev}
-                aria-label="Précédent"
-                className="w-8 h-8 rounded-full bg-white/80 dark:bg-zinc-900/80 hover:bg-white dark:hover:bg-zinc-900 text-zinc-800 dark:text-white flex items-center justify-center shadow-lg transition-transform active:scale-95"
-              >
+              <button onClick={handlePrev} aria-label="Précédent"
+                className="w-8 h-8 rounded-full bg-white/80 dark:bg-zinc-900/80 hover:bg-white dark:hover:bg-zinc-900 text-zinc-800 dark:text-white flex items-center justify-center shadow-lg transition-transform active:scale-95">
                 <ChevronLeft size={16} />
               </button>
-              <button
-                onClick={handleNext}
-                aria-label="Suivant"
-                className="w-8 h-8 rounded-full bg-white/80 dark:bg-zinc-900/80 hover:bg-white dark:hover:bg-zinc-900 text-zinc-800 dark:text-white flex items-center justify-center shadow-lg transition-transform active:scale-95"
-              >
+              <button onClick={handleNext} aria-label="Suivant"
+                className="w-8 h-8 rounded-full bg-white/80 dark:bg-zinc-900/80 hover:bg-white dark:hover:bg-zinc-900 text-zinc-800 dark:text-white flex items-center justify-center shadow-lg transition-transform active:scale-95">
                 <ChevronRight size={16} />
               </button>
             </div>
 
-            {/* Floating availability indicator */}
+            {/* Availability badge */}
             <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-500/90 text-white text-[10px] font-semibold tracking-wider uppercase shadow-md">
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-              Disponible
+              {t('hero_available')}
             </div>
           </div>
 
-          {/* Interactive Thumbnails grid below */}
+          {/* Thumbnails */}
           <div className="flex gap-3 mt-4 justify-center w-full max-w-[340px]">
             {IMAGES.map((img, idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveIndex(idx)}
-                className={`relative w-14 h-14 rounded-xl overflow-hidden border-2 transition-all duration-200 flex-shrink-0 ${activeIndex === idx
-                  ? 'border-violet-500 scale-105 shadow-md shadow-violet-500/20'
-                  : 'border-zinc-200 dark:border-zinc-800 opacity-60 hover:opacity-100'
-                  }`}
+                className={`relative w-14 h-14 rounded-xl overflow-hidden border-2 transition-all duration-200 flex-shrink-0 ${
+                  activeIndex === idx
+                    ? 'border-violet-500 scale-105 shadow-md shadow-violet-500/20'
+                    : 'border-zinc-200 dark:border-zinc-800 opacity-60 hover:opacity-100'
+                }`}
               >
-                <img src={img.src} alt={`Miniature ${idx + 1}`} className="w-full h-full object-cover object-top" />
+                <img src={img.src} alt={`${t('hero_thumbnail_alt')} ${idx + 1}`} className="w-full h-full object-cover object-top" />
               </button>
             ))}
           </div>
 
-          {/* Quick info caption */}
           <p className="text-xs text-zinc-400 dark:text-zinc-600 mt-4 text-center">
-            Cliquez sur les miniatures pour explorer mon parcours en photos
+            {t('hero_photo_hint')}
           </p>
         </div>
 

@@ -4,36 +4,23 @@ import { Send, Github, Linkedin, Twitter, CheckCircle, AlertCircle, ChevronDown 
 import { useLang } from '../contexts/LanguageContext'
 import { WhatsAppIcon, FacebookIcon, openWhatsApp } from '../utils/social'
 
-/* ────────────────────────────────────────
-   EmailJS config – replace with your values
-   from https://dashboard.emailjs.com/
-──────────────────────────────────────── */
-const EJS_SERVICE_ID = 'service_l4tnwzs'
+/* ── EmailJS config ── */
+const EJS_SERVICE_ID  = 'service_l4tnwzs'
 const EJS_TEMPLATE_ID = 'template_0e5q7gc'
-const EJS_PUBLIC_KEY = 'xKY36bB_JGiUQPWG1'
+const EJS_PUBLIC_KEY  = 'xKY36bB_JGiUQPWG1'
 
-function buildSocial(lang) {
+function buildSocial(lang, openWA) {
   return [
     { id: 'github',   label: 'GitHub',   href: 'https://github.com/lucien-amani',                     Icon: Github },
     { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/lucius-amani-333540353/', Icon: Linkedin },
     { id: 'twitter',  label: 'Twitter',  href: 'https://x.com/LucienAman29545',                      Icon: Twitter },
     { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/luciusamani1',               Icon: FacebookIcon },
-    { id: 'whatsapp', label: 'WhatsApp', href: '#', Icon: WhatsAppIcon, onClick: (e) => { e.preventDefault(); openWhatsApp(lang) } },
+    { id: 'whatsapp', label: 'WhatsApp', href: '#', Icon: WhatsAppIcon, onClick: (e) => { e.preventDefault(); openWA(lang) } },
   ]
 }
 
-const SUBJECTS = [
-  'Projet de gestion Scolaire',
-  'Site ou Solution pour une PME',
-  'Solution pour Coopérative Agricole',
-  'Site ASBL ou organisation',
-  'Audit de code / optimisation',
-  'Opportunité CDI / CDD',
-  'Autre',
-]
-
 /* ── Custom animated select ── */
-function CustomSelect({ value, onChange }) {
+function CustomSelect({ value, onChange, placeholder, subjects }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
 
@@ -47,7 +34,6 @@ function CustomSelect({ value, onChange }) {
 
   return (
     <div ref={ref} className="relative">
-      {/* Trigger */}
       <button
         type="button"
         id="contact-subject-btn"
@@ -59,34 +45,26 @@ function CustomSelect({ value, onChange }) {
           }
           ${value ? 'text-zinc-900 dark:text-white' : 'text-zinc-400 dark:text-zinc-500'}`}
       >
-        <span>{value || 'Choisir un sujet…'}</span>
-        <ChevronDown
-          size={16}
-          className={`flex-shrink-0 text-zinc-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-        />
+        <span>{value || placeholder}</span>
+        <ChevronDown size={16} className={`flex-shrink-0 text-zinc-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
       </button>
 
-      {/* Dropdown */}
       {open && (
-        <ul
-          role="listbox"
-          className="absolute z-30 mt-2 w-full rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-xl overflow-hidden animate-fade-in"
-        >
-          {SUBJECTS.map((subject, i) => (
+        <ul role="listbox" className="absolute z-30 mt-2 w-full rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-xl overflow-hidden animate-fade-in">
+          {subjects.map((subject, i) => (
             <li
               key={subject}
               role="option"
               aria-selected={value === subject}
               onClick={() => select(subject)}
               className={`flex items-center gap-3 px-4 py-3 text-sm cursor-pointer transition-colors
-                ${i !== SUBJECTS.length - 1 ? 'border-b border-zinc-100 dark:border-zinc-800' : ''}
+                ${i !== subjects.length - 1 ? 'border-b border-zinc-100 dark:border-zinc-800' : ''}
                 ${value === subject
                   ? 'bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-300 font-medium'
                   : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800'
                 }`}
             >
-              <span className={`w-2 h-2 rounded-full flex-shrink-0 ${value === subject ? 'bg-violet-500' : 'bg-zinc-300 dark:bg-zinc-600'
-                }`} />
+              <span className={`w-2 h-2 rounded-full flex-shrink-0 ${value === subject ? 'bg-violet-500' : 'bg-zinc-300 dark:bg-zinc-600'}`} />
               {subject}
             </li>
           ))}
@@ -102,30 +80,28 @@ export default function Contact() {
   const formRef = useRef(null)
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [customSubject, setCustomSubject] = useState('')
-  const [status, setStatus] = useState(null) // null | 'sending' | 'success' | 'error'
-  const SOCIAL = buildSocial(lang)
+  const [status, setStatus] = useState(null)
+  const SOCIAL = buildSocial(lang, openWhatsApp)
+
+  const SUBJECTS = [
+    t('subj1'), t('subj2'), t('subj3'), t('subj4'),
+    t('subj5'), t('subj6'), t('subj7'),
+  ]
+  const OTHER_LABEL = t('subj7')
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
   const handleSubject = val => setForm(f => ({ ...f, subject: val }))
 
   const handleSubmit = async e => {
     e.preventDefault()
-    const finalSubject = form.subject === 'Autre' ? customSubject : form.subject
+    const finalSubject = form.subject === OTHER_LABEL ? customSubject : form.subject
     if (!finalSubject) return
     setStatus('sending')
-
     try {
-      await emailjs.send(
-        EJS_SERVICE_ID,
-        EJS_TEMPLATE_ID,
-        {
-          name: form.name,
-          email: form.email,
-          subject: finalSubject,
-          message: form.message,
-        },
-        EJS_PUBLIC_KEY
-      )
+      await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+        name: form.name, email: form.email,
+        subject: finalSubject, message: form.message,
+      }, EJS_PUBLIC_KEY)
       setStatus('success')
       setForm({ name: '', email: '', subject: '', message: '' })
       setCustomSubject('')
@@ -140,14 +116,13 @@ export default function Contact() {
         {/* Header */}
         <div className="max-w-2xl mb-16">
           <p className="text-sm font-semibold uppercase tracking-widest text-violet-600 dark:text-violet-400 mb-3">
-            Contact
+            {t('contact_label')}
           </p>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
-            Parlons de votre projet
+            {t('contact_title')}
           </h2>
           <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            Pas besoin d&apos;avoir tout défini. Décrivez-moi votre situation, même en quelques lignes.
-            Je réponds dans les 48 heures via un Courrier Electronique.
+            {t('contact_subtitle')}
           </p>
         </div>
 
@@ -158,16 +133,16 @@ export default function Contact() {
               <div className="flex flex-col items-center justify-center text-center py-16 px-8 rounded-2xl border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/20">
                 <CheckCircle size={40} className="text-green-500 mb-4" />
                 <h3 className="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">
-                  Message envoyé
+                  {t('contact_success_title')}
                 </h3>
                 <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-6">
-                  Merci. Je vous réponds dans les 48 heures via Mail.
+                  {t('contact_success_subtitle')}
                 </p>
                 <button
                   onClick={() => setStatus(null)}
                   className="px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 >
-                  Envoyer un autre message
+                  {t('contact_send_another')}
                 </button>
               </div>
             ) : (
@@ -176,56 +151,48 @@ export default function Contact() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="contact-name" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
-                      Nom complet
+                      {t('contact_name')}
                     </label>
                     <input
-                      id="contact-name"
-                      name="name"
-                      type="text"
-                      required
-                      value={form.name}
-                      onChange={handleChange}
+                      id="contact-name" name="name" type="text" required
+                      value={form.name} onChange={handleChange}
                       placeholder="Jean-Louis"
                       className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
                     />
                   </div>
                   <div>
                     <label htmlFor="contact-email" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
-                      Adresse email
+                      {t('contact_email')}
                     </label>
                     <input
-                      id="contact-email"
-                      name="email"
-                      type="email"
-                      required
-                      value={form.email}
-                      onChange={handleChange}
+                      id="contact-email" name="email" type="email" required
+                      value={form.email} onChange={handleChange}
                       placeholder="jeanlouis@tal.org"
                       className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
                     />
                   </div>
                 </div>
 
-                {/* Custom subject select */}
+                {/* Subject select */}
                 <div>
                   <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
-                    Sujet
+                    {t('contact_subject')}
                   </label>
-                  <CustomSelect value={form.subject} onChange={handleSubject} />
-
-                  {form.subject === 'Autre' && (
+                  <CustomSelect
+                    value={form.subject}
+                    onChange={handleSubject}
+                    placeholder={t('contact_subject_placeholder')}
+                    subjects={SUBJECTS}
+                  />
+                  {form.subject === OTHER_LABEL && (
                     <div className="mt-3 animate-fade-in">
                       <label htmlFor="contact-custom-subject" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
-                        Précisez votre sujet
+                        {t('contact_custom_subject')}
                       </label>
                       <input
-                        id="contact-custom-subject"
-                        name="customSubject"
-                        type="text"
-                        required
-                        value={customSubject}
-                        onChange={e => setCustomSubject(e.target.value)}
-                        placeholder="Ex: Demande de partenariat / Autre projet..."
+                        id="contact-custom-subject" name="customSubject" type="text" required
+                        value={customSubject} onChange={e => setCustomSubject(e.target.value)}
+                        placeholder={t('contact_custom_placeholder')}
                         className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
                       />
                     </div>
@@ -235,16 +202,12 @@ export default function Contact() {
                 {/* Message */}
                 <div>
                   <label htmlFor="contact-message" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
-                    Message
+                    {t('contact_message')}
                   </label>
                   <textarea
-                    id="contact-message"
-                    name="message"
-                    required
-                    rows={5}
-                    value={form.message}
-                    onChange={handleChange}
-                    placeholder="Décrivez votre projet, organisation ou besoin…"
+                    id="contact-message" name="message" required rows={5}
+                    value={form.message} onChange={handleChange}
+                    placeholder={t('contact_message_placeholder')}
                     className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm resize-none"
                   />
                 </div>
@@ -252,26 +215,22 @@ export default function Contact() {
                 {status === 'error' && (
                   <div className="flex items-center gap-2 text-red-600 dark:text-red-400 text-sm">
                     <AlertCircle size={16} />
-                    Une erreur est survenue. Veuillez vous connecter à l'internet.
+                    {t('contact_error')}
                   </div>
                 )}
 
                 <button
-                  id="contact-submit"
-                  type="submit"
-                  disabled={status === 'sending' || !form.subject || (form.subject === 'Autre' && !customSubject.trim())}
+                  id="contact-submit" type="submit"
+                  disabled={status === 'sending' || !form.subject || (form.subject === OTHER_LABEL && !customSubject.trim())}
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-violet-600 hover:bg-violet-700 disabled:bg-violet-400 disabled:cursor-not-allowed text-white font-medium text-sm transition-colors"
                 >
                   {status === 'sending' ? (
                     <>
                       <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Envoi en cours…
+                      {t('contact_sending')}
                     </>
                   ) : (
-                    <>
-                      Envoyer le message
-                      <Send size={16} />
-                    </>
+                    <>{t('contact_send')} <Send size={16} /></>
                   )}
                 </button>
               </form>
@@ -285,17 +244,17 @@ export default function Contact() {
                 Lucien Amani Bahogwerhe
               </h3>
               <div className="space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
-                <p>Développeur Fullstack · Bukavu, RDC</p>
-                <p>Disponible pour CDI, CDD et missions freelance</p>
+                <p>{t('contact_person_role')}</p>
+                <p>{t('contact_availability_label')}</p>
                 <p className="text-xs text-zinc-400 dark:text-zinc-600 italic pt-1">
-                  Email non affiché pour éviter le spam, utilisez le formulaire.
+                  {t('contact_spam_note')}
                 </p>
               </div>
             </div>
 
             <div>
               <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-600 mb-3">
-                Réseaux
+                {t('contact_networks')}
               </p>
               <div className="flex flex-col gap-2">
                 {SOCIAL.map(({ id, label, href, Icon, onClick }) => (
@@ -317,7 +276,7 @@ export default function Contact() {
 
             <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800">
               <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse flex-shrink-0" />
-              <p className="text-sm text-green-800 dark:text-green-300 font-medium">Disponible actuellement</p>
+              <p className="text-sm text-green-800 dark:text-green-300 font-medium">{t('contact_available')}</p>
             </div>
           </div>
         </div>

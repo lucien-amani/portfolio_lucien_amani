@@ -1,18 +1,18 @@
 import { Github, Linkedin, Twitter } from 'lucide-react'
 
 const NAV = [
-  { label: 'Accueil',      href: '#accueil'   },
-  { label: 'Projets',      href: '#projets'   },
-  { label: 'Pourquoi moi', href: '#pourquoi'  },
-  { label: 'Services',     href: '#services'  },
-  { label: 'Contact',      href: '#contact'   },
+  { label: 'Accueil', href: '#accueil' },
+  { label: 'Projets', href: '#projets' },
+  { label: 'Pourquoi moi', href: '#pourquoi' },
+  { label: 'Services', href: '#services' },
+  { label: 'Contact', href: '#contact' },
 ]
 
-const SOCIAL = [
-  { id: 'footer-github',   label: 'GitHub',   href: 'https://github.com/lucien-amani',   icon: Github },
-  { id: 'footer-linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/lucius-amani-333540353/', icon: Linkedin },
-  { id: 'footer-twitter',  label: 'Twitter',  href: 'https://x.com/LucienAman29545',  icon: Twitter },
-]
+// const SOCIAL = [
+//   { id: 'footer-github', label: 'GitHub', href: 'https://github.com/lucien-amani', icon: Github },
+//   { id: 'footer-linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/lucius-amani-333540353/', icon: Linkedin },
+//   { id: 'footer-twitter', label: 'Twitter', href: 'https://x.com/LucienAman29545', icon: Twitter }
+// ]
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -23,11 +23,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-2">
             <a href="#accueil" className="font-display font-bold text-xl text-zinc-900 dark:text-white">
-              Lucien<span className="text-violet-600 dark:text-violet-400">.</span>
+              Lucien Amani<span className="text-violet-600 dark:text-violet-400">.</span>
             </a>
             <p className="text-sm text-zinc-500 dark:text-zinc-500 max-w-xs">
-              Développeur fullstack basé à Bukavu, spécialisé dans les solutions pour écoles,
-              coopératives et organisations.
+              Développeur fullstack basé à Bukavu, spécialisé dans les solutions pour Ecoles, PMEs,
+              Coopératives et Organisations.
             </p>
           </div>
 

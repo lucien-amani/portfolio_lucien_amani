@@ -5,13 +5,13 @@ const DIFFERENTIATORS = [
     icon: MessageSquare,
     title: 'Je parle les deux langages',
     body:
-      `Technique avec les développeurs. Terrain avec les directeurs d'école, les responsables de coopératives et les coordinateurs d'ASBL. Je traduis un problème métier en solution logicielle sans perdre personne en chemin.`,
+      `Technique avec les développeurs. Terrain avec les directeurs d'école, les responsables de coopératives, PMEs et les coordinateurs d'ASBL et Organisations. Je traduis un problème métier en solution logicielle sans perdre personne en chemin.`,
   },
   {
     icon: Sprout,
     title: `J'ai aidé une coopérative à passer du cahier au numérique`,
     body:
-      `COACK n'avait aucun outil de suivi. Aujourd'hui, les responsables voient en temps réel les stocks, les membres actifs et les ventes. Ce n'est pas juste du code — c'est un changement de méthode de travail.`,
+      `COACKI n'avait aucun outil de suivi. Aujourd'hui, les responsables voient en temps réel les stocks, les membres actifs et les ventes. Ce n'est pas juste du code c'est un changement de méthode de travail.`,
   },
   {
     icon: BookOpen,
@@ -29,7 +29,7 @@ const DIFFERENTIATORS = [
     icon: Users,
     title: 'Collaboration prouvée',
     body:
-      `Plusieurs projets ont été menés en binôme avec John Moka. Travailler en équipe, synchroniser le code, respecter des deadlines — ce sont des compétences que je pratique, pas que j'affiche.`,
+      `Plusieurs projets ont été menés en binôme avec John Moka. Travailler en équipe, synchroniser le code, respecter des deadlines, ce sont des compétences que je pratique, pas que j'affiche.`,
   },
   {
     icon: HeartHandshake,

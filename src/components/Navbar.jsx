@@ -3,11 +3,11 @@ import { X, Sun, Moon, Menu } from 'lucide-react'
 import { useTheme } from '../contexts/ThemeContext'
 
 const NAV_LINKS = [
-  { label: 'Accueil',      href: '#accueil'   },
-  { label: 'Projets',      href: '#projets'   },
-  { label: 'Pourquoi moi', href: '#pourquoi'  },
-  { label: 'Services',     href: '#services'  },
-  { label: 'Contact',      href: '#contact'   },
+  { label: 'Accueil', href: '#accueil' },
+  { label: 'Projets', href: '#projets' },
+  { label: 'Pourquoi moi', href: '#pourquoi' },
+  { label: 'Services', href: '#services' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 export default function Navbar() {
@@ -40,11 +40,10 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-stone-50/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm border-b border-zinc-100 dark:border-zinc-800'
-            : 'bg-transparent'
-        }`}
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled
+          ? 'bg-stone-50/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm border-b border-zinc-100 dark:border-zinc-800'
+          : 'bg-transparent'
+          }`}
       >
         <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo */}
@@ -52,7 +51,7 @@ export default function Navbar() {
             href="#accueil"
             className="font-display font-bold text-lg tracking-tight text-zinc-900 dark:text-white"
           >
-            Lucien<span className="text-violet-600 dark:text-violet-400">.</span>
+            Lucien AMANI<span className="text-violet-600 dark:text-violet-400">.</span>
           </a>
 
           {/* Desktop links */}
@@ -86,7 +85,7 @@ export default function Navbar() {
             >
               Me contacter
             </a>
-
+            l
             <button
               id="mobile-menu-toggle"
               onClick={() => setOpen(true)}
@@ -103,22 +102,20 @@ export default function Navbar() {
       {/* Backdrop */}
       <div
         onClick={close}
-        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
-          open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:hidden ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
       />
 
       {/* Drawer panel */}
       <div
         ref={drawerRef}
-        className={`fixed top-0 right-0 z-50 h-full w-72 bg-stone-50 dark:bg-zinc-900 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out md:hidden ${
-          open ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed top-0 right-0 z-50 h-full w-72 bg-stone-50 dark:bg-zinc-900 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out md:hidden ${open ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         {/* Drawer header */}
         <div className="flex items-center justify-between px-6 h-16 border-b border-zinc-100 dark:border-zinc-800">
           <span className="font-display font-bold text-zinc-900 dark:text-white">
-            Lucien<span className="text-violet-600 dark:text-violet-400">.</span>
+            Lucien Amani<span className="text-violet-600 dark:text-violet-400">.</span>
           </span>
           <button
             onClick={close}
@@ -137,9 +134,8 @@ export default function Navbar() {
               href={link.href}
               onClick={close}
               style={{ animationDelay: `${i * 60}ms` }}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium text-zinc-700 dark:text-zinc-300 hover:bg-violet-50 dark:hover:bg-violet-950/30 hover:text-violet-700 dark:hover:text-violet-300 transition-all ${
-                open ? 'animate-fade-up' : ''
-              }`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium text-zinc-700 dark:text-zinc-300 hover:bg-violet-50 dark:hover:bg-violet-950/30 hover:text-violet-700 dark:hover:text-violet-300 transition-all ${open ? 'animate-fade-up' : ''
+                }`}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
               {link.label}

@@ -3,13 +3,13 @@ import { ExternalLink, Lock, Github } from 'lucide-react'
 const PROJECTS = [
   {
     id: 'samy-magadju',
-    title: 'Samy Magadju – Wema ni Hakiba',
+    title: 'Dynamique Samy Magadju - Wema ni Hakiba',
     type: 'Site ASBL',
     client: 'Organisation à but non lucratif',
     problem:
       "L'organisation avait besoin d'une présence numérique claire pour communiquer sa mission et mobiliser des soutiens.",
     solution: `Site vitrine dynamique présentant les activités, valeurs et appels à l'action de l'ASBL.`,
-    stack: ['React', 'Tailwind', 'Node.js'],
+    stack: ['PHP', 'Tailwind', "JavaScript", 'MySQL', 'Shell'],
     status: 'public',
     link: null,
     collab: null,
@@ -22,21 +22,21 @@ const PROJECTS = [
     problem:
       "La fondation manquait d'un outil numérique pour présenter ses programmes et crédibiliser ses actions auprès de partenaires.",
     solution: 'Site institutionnel structuré avec pages programmes, équipe et formulaire de contact sécurisé.',
-    stack: ['PHP', 'JavaScript', 'MySQL'],
+    stack: ['PHP', 'MySQL', 'JavaScript', 'Tailwind CSS'],
     status: 'public',
     link: null,
     collab: null,
   },
   {
     id: 'coack',
-    title: 'COACK',
-    type: 'Solution coopérative',
+    title: 'COACKI',
+    type: 'Solution Coopérative',
     client: 'Coopérative Agricole du Kivu',
     problem:
       "La coopérative gérait adhésions, ventes et production sur papier, rendant impossible tout suivi fiable.",
     solution:
       'Application web sur mesure : gestion des membres, traçabilité des récoltes, tableau de bord dirigeants.',
-    stack: ['Go', 'React', 'PostgreSQL'],
+    stack: ['React', 'MySQL', 'Tailwind CSS'],
     status: 'confidentiel',
     link: null,
     collab: 'John Moka',
@@ -44,13 +44,13 @@ const PROJECTS = [
   {
     id: 'scholaris',
     title: 'Scholaris',
-    type: 'Application de gestion scolaire',
-    client: 'Établissements scolaires',
+    type: 'Application de Gestion Scolaire',
+    client: 'Établissements Scolaires',
     problem:
       "Les écoles manquaient d'un outil centralisé pour élèves, notes, absences et communication parents-enseignants.",
     solution:
       'Plateforme complète : inscriptions, bulletins numériques, suivi des présences et messagerie intégrée.',
-    stack: ['Go', 'React', 'Tailwind', 'PostgreSQL'],
+    stack: ['Go', 'React', 'Tailwind', 'SQLite', 'Google Cloud'],
     status: 'public',
     link: 'https://github.com/lucien-amani/kilimandjaro',
     collab: 'John Moka',

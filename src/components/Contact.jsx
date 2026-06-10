@@ -17,8 +17,9 @@ const SOCIAL = [
 ]
 
 const SUBJECTS = [
-  'Projet de gestion scolaire',
-  'Solution pour coopérative agricole',
+  'Projet de gestion Scolaire',
+  'Site ou Solution pour une PME',
+  'Solution pour Coopérative Agricole',
   'Site ASBL ou organisation',
   'Audit de code / optimisation',
   'Opportunité CDI / CDD',
@@ -137,8 +138,8 @@ export default function Contact() {
             Parlons de votre projet
           </h2>
           <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            Pas besoin d&apos;avoir tout défini. Décrivez-moi votre situation — même en quelques lignes.
-            Je réponds dans les 48 heures.
+            Pas besoin d&apos;avoir tout défini. Décrivez-moi votre situation, même en quelques lignes.
+            Je réponds dans les 48 heures via un Courrier Electronique.
           </p>
         </div>
 
@@ -152,7 +153,7 @@ export default function Contact() {
                   Message envoyé
                 </h3>
                 <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-6">
-                  Merci. Je vous réponds dans les 48 heures.
+                  Merci. Je vous réponds dans les 48 heures via Mail.
                 </p>
                 <button
                   onClick={() => setStatus(null)}
@@ -243,7 +244,7 @@ export default function Contact() {
                 {status === 'error' && (
                   <div className="flex items-center gap-2 text-red-600 dark:text-red-400 text-sm">
                     <AlertCircle size={16} />
-                    Une erreur est survenue. Veuillez réessayer.
+                    Une erreur est survenue. Veuillez vous connecter à l'internet.
                   </div>
                 )}
 
@@ -279,7 +280,7 @@ export default function Contact() {
                 <p>Développeur Fullstack · Bukavu, RDC</p>
                 <p>Disponible pour CDI, CDD et missions freelance</p>
                 <p className="text-xs text-zinc-400 dark:text-zinc-600 italic pt-1">
-                  Email non affiché pour éviter le spam — utilisez le formulaire.
+                  Email non affiché pour éviter le spam, utilisez le formulaire.
                 </p>
               </div>
             </div>

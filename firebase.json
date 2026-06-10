@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "portfolio-lucien-amani",
     "public": "dist",
     "ignore": [
       "firebase.json",

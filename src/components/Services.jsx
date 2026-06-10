@@ -12,7 +12,7 @@ const SERVICES = [
   {
     id: 'cooperative-agricole',
     icon: Sprout,
-    title: 'Solutions pour coopératives agricoles',
+    title: 'Solutions pour Coopératives Agricoles',
     description:
       'Outils sur mesure pour passer du cahier au numérique : gestion des membres, traçabilité des récoltes et intrants, suivi des ventes et des paiements.',
     highlights: ['Registre des membres & adhésions', 'Traçabilité des récoltes', 'Gestion des ventes', 'Rapports dirigeants'],
@@ -20,7 +20,7 @@ const SERVICES = [
   {
     id: 'site-asbl',
     icon: Building2,
-    title: 'Sites ASBL & organisations',
+    title: 'Sites ASBL & Organisations',
     description:
       'Sites institutionnels ou vitrine pour organisations à but non lucratif, fondations et personnes physiques. Clarté de message, accessibilité et facilité de mise à jour.',
     highlights: ['Site vitrine ou institutionnel', 'Formulaires et collecte de dons', 'SEO et accessibilité', 'Maintenance incluse'],
@@ -97,7 +97,7 @@ export default function Services() {
               Un projet en tête ?
             </p>
             <p className="text-violet-200 text-sm">
-              Décrivez-moi votre situation — même vaguement. On verra ensemble ce qui est faisable.
+              Décrivez-moi votre situation même vaguement. On verra ensemble ce qui est faisable.
             </p>
           </div>
           <a

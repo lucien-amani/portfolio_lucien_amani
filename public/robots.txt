@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://lucien-amani.web.app/
+Host: https://portfolio-lucien-amani.web.app/
 
 # Sitemap
-Sitemap: https://lucien-amani.web.app/sitemap.xml
+Sitemap: https://portfolio-lucien-amani.web.app/sitemap.xml

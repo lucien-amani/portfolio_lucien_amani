@@ -94,6 +94,7 @@ export default function Contact() {
 
   const handleSubmit = async e => {
     e.preventDefault()
+    if (!navigator.onLine) { setStatus('offline'); return }
     const finalSubject = form.subject === OTHER_LABEL ? customSubject : form.subject
     if (!finalSubject) return
     setStatus('sending')
@@ -143,6 +144,27 @@ export default function Contact() {
                   className="px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 >
                   {t('contact_send_another')}
+                </button>
+              </div>
+            ) : status === 'offline' ? (
+              <div className="flex flex-col items-center justify-center text-center py-16 px-8 rounded-2xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20">
+                <div className="w-16 h-16 rounded-full bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center mb-5">
+                  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-amber-500">
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                    <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55M5 12.55a10.94 10.94 0 0 1 5.17-2.39M10.71 5.05A16 16 0 0 1 22.56 9M1.42 9a15.91 15.91 0 0 1 4.7-2.88M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/>
+                  </svg>
+                </div>
+                <h3 className="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">
+                  {t('offline_title')}
+                </h3>
+                <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-6 max-w-xs">
+                  {t('offline_msg')}
+                </p>
+                <button
+                  onClick={() => setStatus(null)}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium transition-colors"
+                >
+                  {t('offline_retry')}
                 </button>
               </div>
             ) : (

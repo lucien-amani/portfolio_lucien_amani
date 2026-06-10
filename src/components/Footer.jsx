@@ -10,7 +10,7 @@ const NAV = [
   { labelKey: 'nav_contact',  href: '#contact' },
 ]
 
-export default function Footer() {
+export default function Footer({ onPrivacyClick }) {
   const { t, lang } = useLang()
   const year = new Date().getFullYear()
 
@@ -90,10 +90,15 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-6 border-t border-zinc-100 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-zinc-400 dark:text-zinc-600">
           <p>© {year} Lucien Amani Bahogwerhe. {t('footer_rights')}</p>
-          <p>
-            {t('footer_designed')}{' '}
-            <span className="text-violet-500 dark:text-violet-400 font-medium">Lucien Amani</span>
-          </p>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={onPrivacyClick}
+              className="hover:text-violet-500 dark:hover:text-violet-400 transition-colors underline underline-offset-2"
+            >
+              {t('cookie_learn_more')}
+            </button>
+            <p>{t('footer_designed')}{' '}<span className="text-violet-500 dark:text-violet-400 font-medium">Lucien Amani</span></p>
+          </div>
         </div>
       </div>
     </footer>

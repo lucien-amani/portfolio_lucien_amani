@@ -1,62 +1,49 @@
 import { Github, Linkedin, Twitter } from 'lucide-react'
+import { useLang } from '../contexts/LanguageContext'
+import { WhatsAppIcon, FacebookIcon, openWhatsApp } from '../utils/social'
 
 const NAV = [
-  { label: 'Accueil', href: '#accueil' },
-  { label: 'Projets', href: '#projets' },
-  { label: 'Pourquoi moi', href: '#pourquoi' },
-  { label: 'Services', href: '#services' },
-  { label: 'Contact', href: '#contact' },
-]
-
-const WHATSAPP_MESSAGES = [
-  "Bonjour Lucien, j'ai vu votre portfolio et j'aimerais discuter d'un projet de développement.",
-  "Salut Lucien, je souhaiterais en savoir plus sur vos solutions sur mesure.",
-  "Bonjour Lucien, j'aimerais avoir un échange concernant une opportunité de collaboration.",
-  "Bonjour Lucien Amani, je souhaite discuter d'un projet web pour mon organisation.",
-  "Bonjour, j'aimerais obtenir un devis pour un projet de développement de logiciel."
-];
-
-const handleWhatsAppClick = (e) => {
-  e.preventDefault();
-  const randomMsg = WHATSAPP_MESSAGES[Math.floor(Math.random() * WHATSAPP_MESSAGES.length)];
-  const url = `https://wa.me/243971425029?text=${encodeURIComponent(randomMsg)}`;
-  window.open(url, '_blank', 'noopener,noreferrer');
-};
-
-const WhatsAppIcon = ({ size = 18 }) => (
-  <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.705 1.456h.008c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-  </svg>
-);
-
-const SOCIAL = [
-  { id: 'footer-github', label: 'GitHub', href: 'https://github.com/lucien-amani', icon: Github },
-  { id: 'footer-linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/lucius-amani-333540353/', icon: Linkedin },
-  { id: 'footer-twitter', label: 'Twitter', href: 'https://x.com/LucienAman29545', icon: Twitter },
-  { id: 'footer-whatsapp', label: 'WhatsApp', href: '#', icon: WhatsAppIcon, onClick: handleWhatsAppClick }
+  { labelKey: 'nav_home',     href: '#accueil' },
+  { labelKey: 'nav_projects', href: '#projets' },
+  { labelKey: 'nav_why',      href: '#pourquoi' },
+  { labelKey: 'nav_services', href: '#services' },
+  { labelKey: 'nav_contact',  href: '#contact' },
 ]
 
 export default function Footer() {
+  const { t, lang } = useLang()
   const year = new Date().getFullYear()
+
+  const SOCIAL = [
+    { id: 'footer-github',    label: 'GitHub',    href: 'https://github.com/lucien-amani',                     icon: Github },
+    { id: 'footer-linkedin',  label: 'LinkedIn',  href: 'https://www.linkedin.com/in/lucius-amani-333540353/', icon: Linkedin },
+    { id: 'footer-twitter',   label: 'Twitter',   href: 'https://x.com/LucienAman29545',                      icon: Twitter },
+    { id: 'footer-facebook',  label: 'Facebook',  href: 'https://www.facebook.com/luciusamani1',               icon: FacebookIcon },
+    {
+      id: 'footer-whatsapp', label: 'WhatsApp', href: '#', icon: WhatsAppIcon,
+      onClick: (e) => { e.preventDefault(); openWhatsApp(lang) }
+    },
+  ]
+
   return (
-    <footer className="border-t border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-12">
+    <footer className="border-t border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-12 pb-24 md:pb-12">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-10">
+
           {/* Brand */}
           <div className="space-y-2">
             <a href="#accueil" className="font-display font-bold text-xl text-zinc-900 dark:text-white">
               Lucien Amani<span className="text-violet-600 dark:text-violet-400">.</span>
             </a>
             <p className="text-sm text-zinc-500 dark:text-zinc-500 max-w-xs">
-              Développeur fullstack basé à Bukavu, spécialisé dans les solutions pour Ecoles, PMEs,
-              Coopératives et Organisations.
+              {t('footer_built')}
             </p>
           </div>
 
           {/* Nav */}
           <nav>
             <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-600 mb-3">
-              Navigation
+              {t('footer_nav')}
             </p>
             <ul className="space-y-2">
               {NAV.map(link => (
@@ -65,7 +52,7 @@ export default function Footer() {
                     href={link.href}
                     className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </a>
                 </li>
               ))}
@@ -75,9 +62,9 @@ export default function Footer() {
           {/* Social */}
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-600 mb-3">
-              Réseaux
+              {t('footer_networks')}
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-2 flex-wrap">
               {SOCIAL.map(s => {
                 const Icon = s.icon
                 return (
@@ -86,10 +73,11 @@ export default function Footer() {
                     id={s.id}
                     href={s.href}
                     onClick={s.onClick}
-                    target="_blank"
+                    target={s.onClick ? undefined : '_blank'}
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/30 transition-colors"
+                    title={s.label}
+                    className="p-2.5 rounded-xl border border-zinc-100 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 hover:border-violet-200 dark:hover:border-violet-800 hover:bg-violet-50 dark:hover:bg-violet-950/30 transition-all duration-200"
                   >
                     <Icon size={18} />
                   </a>
@@ -101,9 +89,9 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-6 border-t border-zinc-100 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-zinc-400 dark:text-zinc-600">
-          <p>© {year} Lucien Amani Bahogwerhe. Tous droits réservés.</p>
+          <p>© {year} Lucien Amani Bahogwerhe. {t('footer_rights')}</p>
           <p>
-            Conçu et développé par{' '}
+            {t('footer_designed')}{' '}
             <span className="text-violet-500 dark:text-violet-400 font-medium">Lucien Amani</span>
           </p>
         </div>

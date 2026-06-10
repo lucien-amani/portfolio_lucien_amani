@@ -8,10 +8,14 @@
     --font-sans: 'Inter', system-ui, sans-serif;
     --font-display: 'Sora', system-ui, sans-serif;
     color-scheme: light;
+    --bottom-nav-bg: rgba(255, 255, 255, 0.95);
+    --bottom-nav-border: #e4e4e7;
   }
 
   .dark {
     color-scheme: dark;
+    --bottom-nav-bg: rgba(9, 9, 11, 0.96);
+    --bottom-nav-border: #27272a;
   }
 
   html {
